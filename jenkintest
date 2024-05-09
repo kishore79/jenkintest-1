@@ -1,0 +1,20 @@
+pipeline{
+    agent any
+    
+    environment{
+        PATH = "/usr/bin:$PATH"
+    }
+    stages{
+        stage("Git Checkout"){
+            steps{
+                git credentialsId: 'github', url: 'https://github.com/kishore79/jenkintest-1'
+            }
+        }
+        stage("Maven Build"){
+            steps{
+                sh "mvn clean package"
+                sh "mv target/*.war target/myweb.war"
+            }
+        }
+}
+}
